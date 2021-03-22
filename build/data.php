@@ -121,6 +121,8 @@ class DatabaseConnection {
     
     $this->connect();
 
+    $this->drop();
+
     if(!$this->test()) {
       $this->setup();
       return;
