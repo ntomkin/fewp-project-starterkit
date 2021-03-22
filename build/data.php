@@ -175,7 +175,7 @@ class DatabaseConnection {
   public function update($id, $name, $amazingLevel, $country) {
     try {
       @pg_query($this->getConnection(), "DEALLOCATE update_record");
-      @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = $3, country = '$4' WHERE id = $1;");
+      @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = '$3', country = '$4' WHERE id = $1;");
   
       //  Execute prepared statement
       pg_execute($this->getConnection(), "update_record", array($id, $name, $amazingLevel, $country));
