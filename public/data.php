@@ -214,7 +214,6 @@ class DatabaseConnection {
     } catch(Exception $e) {
       return FALSE;
     }
-
   }
 
   //  Establish connection to database
@@ -251,7 +250,7 @@ class DatabaseConnection {
 
     //  Prepare SQL statement for updating a row in the records table
     @pg_query($this->getConnection(), "DEALLOCATE update_record");
-    @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = $2, amazing_level = $3, country = $4 WHERE id = $1;");
+    @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = $3, country = '$4' WHERE id = $1;");
 
     //  Prepare SQL statement for dropping a table called 'records'
     @pg_query($this->getConnection(), "DEALLOCATE drop_records");
@@ -269,11 +268,13 @@ class DatabaseConnection {
 
   //  Creates record table and inserts a few fake records
   function setup() {
+    //  SQL prepared statements
     $this->statements();
+
     //  Comment out this line to start fresh
     if($this->test()) return;
 
-    //  Setup SQL statements and create table
+    //  Drop/create table
     $this->drop();
     $this->createTable();
 
