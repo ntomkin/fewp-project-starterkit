@@ -127,7 +127,7 @@ class DatabaseConnection {
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
 
     //  Prepare SQL statement for updating a row in the records table
-    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET `$2` = '$3' WHERE id = $1;");
+    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET '$2' = $3 WHERE id = $1;");
 
     //  Prepare SQL statement for dropping a table called 'records'
     pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
