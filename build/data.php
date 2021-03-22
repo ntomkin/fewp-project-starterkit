@@ -127,7 +127,7 @@ class DatabaseConnection {
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
 
     //  Prepare SQL statement for updating a row in the records table
-    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET '$2' = $3 WHERE id = $1;");
+    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET `name` = $2, `amazing_level` = $3, `country` = $4 WHERE id = $1;");
 
     //  Prepare SQL statement for dropping a table called 'records'
     pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
@@ -173,10 +173,10 @@ class DatabaseConnection {
   }
 
   //  Updates a row in the records table
-  public function update($id, $column, $value) {
+  public function update($id, $name, $amazingLevel, $country) {
     try {
       //  Execute prepared statement
-      pg_execute($this->getConnection(), "update_record", array($id, $column, $value));
+      pg_execute($this->getConnection(), "update_record", array($id, $name, $amazingLevel, $country));
 
       return TRUE;
     } catch(Exception $e) {
