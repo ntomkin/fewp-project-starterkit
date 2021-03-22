@@ -35,6 +35,7 @@ class DatabaseConnection {
 
   function __construct() {
     $this->connect();
+    $this->drop();
     if(!$this->test()) $this->setup();
   }
   
@@ -59,6 +60,17 @@ class DatabaseConnection {
     try {
       pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3);");
       pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
+      return TRUE;
+    } catch(Exception $e) {
+      return FALSE;
+    }
+  }
+
+  //  Drops the records table
+  public function drop() {
+    try {
+      pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+      pg_execute($this->getConnection(), "drop_records", array());
       return TRUE;
     } catch(Exception $e) {
       return FALSE;
@@ -105,8 +117,8 @@ class DatabaseConnection {
     pg_execute($this->getConnection(), "create_table", array());
 
     //  Create some fake records
-    $this->create("Kylie Minogue", 10, "Australia");
     $this->create("Sugababes", 9, "England");
+    $this->create("Kylie Minogue", 10, "Australia");
     $this->create("2 Unlimited", 8, "Germany");
     $this->create("Brooklyn Bounce", 8, "United States");
   }
