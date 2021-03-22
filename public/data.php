@@ -158,6 +158,8 @@ class DatabaseConnection {
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
 
+      var_dump(pg_fetch_array($result));
+
       //  Return ID of created row
       return pg_fetch_array($result)[0];
     } catch(Exception $e) {
