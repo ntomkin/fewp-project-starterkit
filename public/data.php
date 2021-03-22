@@ -7,16 +7,11 @@ header("Access-Control-Allow-Headers: *");
 $dbc = new DatabaseConnection();
 $dbc->create("Kylie Minogue", 10, "Australia");
 $record = $dbc->get(1);
-var_dump($record);
 
 try {
   $result = [
     'status' => 'OK',
-    'record' => [
-      'name' => 'Kylie Minogue', 
-      'amazing_level' => '10',
-      'country' => 'Australia',
-    ]
+    'record' => $record
   ];
 } catch(Exception $exception) {
   $result = [
