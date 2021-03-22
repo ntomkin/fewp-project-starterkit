@@ -1,9 +1,6 @@
 <?php
 require '../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
-$dotenv->load();
-
 //  Allows us to communicate with this PHP script from our front-end application
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
