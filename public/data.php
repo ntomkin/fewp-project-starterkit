@@ -30,7 +30,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
   case "DELETE": //  Request: Delete a row
 
     //  Get parameters posted to this script
-    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
     //  Use DatabaseConnection to delete the row
     $db->delete($id);
