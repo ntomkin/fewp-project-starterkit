@@ -4,7 +4,13 @@
     },
     "scripts": {
         "setup": [
-            "npm run build"
+            "composer install",
+            "npm run build",
+            "git init",
+            "heroku login"
+        ],
+        "dev": [
+            "yarn start"
         ],
         "deploy": [
             "npm run build",

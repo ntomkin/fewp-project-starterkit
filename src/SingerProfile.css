@@ -1,3 +1,22 @@
 .SingerProfile {
+    border: 1px solid #ffcc00;
+    background: #ffcc00;
+    padding: 40px;
+    color: black;
+    font-size: 18px;
+    width: 600px;
+    margin: 20px;
     
+}
+
+.SingerProfile .SingerName {
+    font-size: 40px;
+}
+
+.SingerProfile .SingerAmazingLevel {
+
+}
+
+.SingerProfile .SingerCountry {
+
 }

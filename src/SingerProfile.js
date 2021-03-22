@@ -6,9 +6,6 @@ class SingerProfile extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-  }
-
   render() {
     let content = "Please wait...";
 
