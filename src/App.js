@@ -17,11 +17,11 @@ class App extends React.Component {
   //  on Heroku. It uses a library called axios. Think of this
   //  as an alternative to jQuery's .get, .post
   //  https://www.npmjs.com/package/axios#example
-  
+
   getDataExample() {
     axios.get(process.env.REACT_APP_URL + '/data.php')
       .then(function(res) {
-        console.log(res);
+        console.log(res.data.data);
       })
       .catch(function(err) {
         console.log(err);

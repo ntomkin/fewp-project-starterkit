@@ -5,10 +5,21 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 
-$result = [
-  'status' => 'OK',
-  'data' => ['some', 'data', 'returned']
-];
+try {
+  $result = [
+    'status' => 'OK',
+    'record' => [
+      'name' => 'Kylie Minogie', 
+      'position', 'Singer',
+      'country', 'Australia',
+    ]
+  ];
+} catch(Exception $exception) {
+  $result = [
+    'status' => 'ERROR',
+    'record' => null
+  ];
+}
 
 echo json_encode($result);
 
