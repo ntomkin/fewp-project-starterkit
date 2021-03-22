@@ -153,7 +153,7 @@ class DatabaseConnection {
       //  Execute prepared statement
       $id = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
 
-      var_dump($id);
+      var_dump(pg_fetch_array($id));
       error_log($id);
 
       return TRUE;
