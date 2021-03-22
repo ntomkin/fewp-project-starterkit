@@ -243,23 +243,23 @@ class DatabaseConnection {
 
     //  Prepare SQL statement for creating a row in the records table
     @pg_query($this->getConnection(), "DEALLOCATE create_record");
-    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+    @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
 
     //  Prepare SQL statement for deleting a row in the records table
     @pg_query($this->getConnection(), "DEALLOCATE delete_record");
-    pg_prepare($this->getConnection(), "delete_record", "DELETE FROM records WHERE id = $1;");
+    @pg_prepare($this->getConnection(), "delete_record", "DELETE FROM records WHERE id = $1;");
 
     //  Prepare SQL statement for updating a row in the records table
     @pg_query($this->getConnection(), "DEALLOCATE update_record");
-    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = $2, amazing_level = $3, country = $4 WHERE id = $1;");
+    @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = $2, amazing_level = $3, country = $4 WHERE id = $1;");
 
     //  Prepare SQL statement for dropping a table called 'records'
     @pg_query($this->getConnection(), "DEALLOCATE drop_records");
-    pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+    @pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
 
     //  Prepare SQL statement for creating a table called 'records'
     @pg_query($this->getConnection(), "DEALLOCATE create_table");
-    pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
+    @pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
       id SERIAL PRIMARY KEY,
       name CHARACTER VARYING(100),
       amazing_level INT,
@@ -269,11 +269,11 @@ class DatabaseConnection {
 
   //  Creates record table and inserts a few fake records
   function setup() {
+    $this->statements();
     //  Comment out this line to start fresh
     if($this->test()) return;
 
     //  Setup SQL statements and create table
-    $this->statements();
     $this->drop();
     $this->createTable();
 
