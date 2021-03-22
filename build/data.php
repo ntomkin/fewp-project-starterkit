@@ -32,6 +32,9 @@ class DatabaseConnection {
   function __construct() {
     $this->connect();
 
+    error_log("THISSSSS_----------");
+    error_log($this->test());
+
     if(!$this->test()) $this->setup();
   }
 
