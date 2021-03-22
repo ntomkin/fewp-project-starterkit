@@ -2,10 +2,6 @@ import './SingerProfile.css';
 import React from 'react';
 
 class SingerProfile extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let content = "Please wait...";
 
