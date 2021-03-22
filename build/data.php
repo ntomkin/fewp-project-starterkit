@@ -59,12 +59,12 @@ class DatabaseConnection {
 
   function setup() {
     //  Creates record table
-    pg_execute($this->getConnection(), 'CREATE TABLE IF NOT EXISTS records (
+    pg_execute($this->getConnection(), "CREATE TABLE IF NOT EXISTS records (
       id SERIAL PRIMARY KEY,
       name CHARACTER VARYING(100),
       amazing_level INT,
       country CHARACTER VARYING(100)
-    );');
+    );");
   }
 
   function getConnectionString() {
