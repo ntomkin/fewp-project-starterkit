@@ -17,7 +17,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
   case "PUT": //  Request: Update a row
 
     //  Get parameters posted to this script
-    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_ENCODED);
     $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_VALIDATE_INT);
     $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_ENCODED);
