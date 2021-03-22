@@ -274,7 +274,7 @@ class DatabaseConnection {
     $this->statements();
 
     //  Comment out this line to start fresh
-    if($this->test()) return;
+//    if($this->test()) return;
 
     //  Drop/create table
     $this->drop();
