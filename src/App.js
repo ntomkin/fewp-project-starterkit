@@ -29,6 +29,7 @@ class App extends React.Component {
       })
       .catch(function(err) {
         console.log(err);
+        return null;
       });
   }
 
@@ -42,6 +43,7 @@ class App extends React.Component {
       })
       .catch(function(err) {
         console.log(err);
+        return null;
       });
   }
 
@@ -54,21 +56,26 @@ class App extends React.Component {
     };
     axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
       .then(function(res) {
-        that.setState({row: res.data.data});
+        let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
+        that.setState({row: data});
+        return data;
       })
       .catch(function(err) {
         console.log(err);
+        return null;
       });
   }
 
   delete(id) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {})
+    return axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {})
       .then(function(res) {
         that.setState({row: null});
+        return res.data.data;
       })
       .catch(function(err) {
         console.log(err);
+        return null;
       });
   }
 
@@ -79,12 +86,16 @@ class App extends React.Component {
       amazing_level: amazingLevel,
       country: country
     };
-    axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
+    return axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
       .then(function(res) {
-        that.setState({row: res.data.data});
+        console.log(res);
+        let data = {name: name, amazing_level: amazingLevel, country: country};
+        that.setState({row: data});
+        return data;
       })
       .catch(function(err) {
         console.log(err);
+        return null;
       });
   }
 
