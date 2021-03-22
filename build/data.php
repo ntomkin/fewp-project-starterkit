@@ -15,12 +15,15 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
     //  Get parameters posted to this script
     $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-    $column = filter_input(INPUT_POST, 'column', FILTER_SANITIZE_ENCODED);
-    $value = filter_input(INPUT_POST, 'value', FILTER_SANITIZE_ENCODED);
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_ENCODED);
+    $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_VALIDATE_INT);
+    $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_ENCODED);
     
     //  Use DatabaseConnection to make the update
-    $db->update($id, $column, $value);
+    $db->update($id, $name, $amazingLevel, $country);
 
+    $data = ['id' => $id, 'name' => $name, 'amazing_level' => $amazingLevel, 'country' => $country];
+    
     break;
   
   case "DELETE": //  Request: Delete a row
@@ -30,6 +33,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
     //  Use DatabaseConnection to delete the row
     $db->delete($id);
+
+    $data = 'Successfully deleted';
 
     break;
 
@@ -41,7 +46,9 @@ switch($_SERVER["REQUEST_METHOD"]) {
     $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_ENCODED);
 
     //  Use DatabaseConnection to create the row
-    $db->create($name, $amazingLevel, $country);
+    $id = $db->create($name, $amazingLevel, $country);
+
+    $data = ['id' => $id, 'name' => $name, 'amazing_level' => $amazingLevel, 'country' => $country];
 
     break;
 

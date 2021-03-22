@@ -6,7 +6,10 @@ import axios from 'axios';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data: null};
+    this.state = {
+      all: null, 
+      row: null,
+    };
   }
 
   //  This example shows us how to get data from our database
@@ -21,7 +24,7 @@ class App extends React.Component {
     return axios.get(process.env.REACT_APP_URL + '/data.php')
       .then(function(res) {
         //  We'll set our local state to the rows returned from the example
-        that.setState({data: res.data.data});
+        that.setState({all: res.data.data});
         return res.data.data;
       })
       .catch(function(err) {
@@ -34,7 +37,7 @@ class App extends React.Component {
     return axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`)
       .then(function(res) {
         //  We'll set our local state to the row returned from the example
-        that.setState({data: res.data.data});
+        that.setState({row: res.data.data});
         return res.data.data;
       })
       .catch(function(err) {
@@ -51,7 +54,7 @@ class App extends React.Component {
     };
     axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
       .then(function(res) {
-        //  Do something after you update the row
+        that.setState({row: res.data.data});
       })
       .catch(function(err) {
         console.log(err);
@@ -62,7 +65,7 @@ class App extends React.Component {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
     axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {})
       .then(function(res) {
-        //  Do something after you delete the row
+        that.setState({row: null});
       })
       .catch(function(err) {
         console.log(err);
@@ -78,7 +81,7 @@ class App extends React.Component {
     };
     axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
       .then(function(res) {
-        //  Do something after you create the row
+        that.setState({row: res.data.data});
       })
       .catch(function(err) {
         console.log(err);
@@ -98,6 +101,36 @@ class App extends React.Component {
 
     console.log("Test: get all rows");
     this.all()
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+    console.log("Test: delete row 1");
+    this.delete(1)
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+    console.log("Test: delete a single row");
+    this.delete(1)
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+    console.log("Test: create a single row");
+    this.create("Robyn", 10, "Denmark")
       .then(function(res) {
         console.table(res);
       })
