@@ -1,65 +1,176 @@
 <?php
 require_once('../vendor/autoload.php');
 
+//  Allows us to communicate with this PHP script from our front-end application
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+
+//  Establish a connection to database
+$db = new DatabaseConnection();
+
+//  Determine the type of incoming request
+switch($_SERVER["REQUEST_METHOD"]) {
+
+  case "PUT": //  Request: Update a row
+
+    //  Get parameters posted to this script
+    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $column = filter_input(INPUT_POST, 'column', FILTER_SANITIZE_ENCODED);
+    $value = filter_input(INPUT_POST, 'value', FILTER_SANITIZE_ENCODED);
+    
+    //  Use DatabaseConnection to make the update
+    $db->update($id, $column, $value);
+
+    break;
+  
+  case "DELETE": //  Request: Delete a row
+
+    //  Get parameters posted to this script
+    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+    //  Use DatabaseConnection to delete the row
+    $db->delete($id);
+
+    break;
+
+  case "POST": //  Request: Insert a row
+
+    //  Get parameters posted to this script
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_ENCODED);
+    $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_VALIDATE_INT);
+    $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_ENCODED);
+
+    //  Use DatabaseConnection to create the row
+    $db->create($name, $amazingLevel, $country);
+
+    break;
+
+  case "GET": //  Request: Get a row
+
+    //  Get parameters posted to this script
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+    //  Use DatabaseConnection to get the row
+    $db->get($name, $amazingLevel, $country);
+
+    break;
+}
 
 $dbc = new DatabaseConnection();
 
 $record = $dbc->get(1);
 
-try {
-  $result = [
-    'status' => 'OK',
-    'record' => $record
-  ];
-} catch(Exception $exception) {
-  $result = [
-    'status' => 'ERROR',
-    'record' => null
-  ];
-}
 
-echo json_encode($result);
-
+//  -------------------------------------------------------------------------
+//
+//  HandleRequest: 
+//  Provides a way return results to front-end application from database. 
+//
+//  Usage:
+//  return HandleRequest::parse($data);
+//
+//  -------------------------------------------------------------------------
 
 class HandleRequest {
-  function __construct() {
+  public static function parse($data) {
+    try {
+      $result = [
+        'status' => 'OK',
+        'data' => $data
+      ];
+    } catch(Exception $exception) {
+      $result = [
+        'status' => 'ERROR',
+        'data' => null
+      ];
+    }
     
+    return json_encode($result);
   }
 }
 
+//  -------------------------------------------------------------------------
+//
+//  DatabaseConnection: 
+//  Provides a way to create, update, delete rows in a table called 'records'. 
+//
+//  Usage:
+//  $db = new DatabaseConnection();
+//
+//  Getting a row: 
+//  $db->get(1); 
+//
+//  Getting all rows:
+//  $db->all();
+//
+//  Deleting a row:
+//  $db->delete(1);
+//
+//  Creating a row:
+//  $db->create("Kylie Minogue", 10, "Australia");
+//
+//  Updating a row:
+//  $db->update(1, "name", "2 Unlimited");
+//
+//  -------------------------------------------------------------------------
 
 class DatabaseConnection {
   public $connection;
 
   function __construct() {
     $this->connect();
+
+    
     $this->drop();
+
     if(!$this->test()) $this->setup();
   }
   
   //  Get a row from the records table
   public function get($id) {
-    //  We both know this isn't good enough, as it isn't filtering. Please make sure you do that :)
-    $results = pg_query($this->getConnection(), "SELECT * FROM records WHERE id = $id ORDER BY name LIMIT 1");
+    //  Get a specific row by 'id', return as an associative array
+    $results = pg_query_params($this->getConnection(), "SELECT * FROM records WHERE id = $1 ORDER BY name LIMIT 1", array($id));
     $row = pg_fetch_assoc($results, 0);
+
     return $row;
   }
 
   //  Gets all rows from the records table
   public function all() {
-    //  We both know this isn't good enough, as it isn't filtering. Please make sure you do that :)
+    //  Get all rows, return them as an associative array
     $results = pg_query($this->getConnection(), "SELECT * FROM records ORDER BY name");
     $rows = pg_fetch_assoc($results);
+
     return $rows;
   }
 
   //  Creates a row in the records table
   public function create($name, $amazingLevel, $country) {
     try {
-      pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3);");
-      pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
+      //  Prepare SQL statement for creating a row in the records table
+      pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+
+      //  Execute prepared statement
+      $id = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
+
+      var_dump($id);
+      error_log($id);
+
+      return TRUE;
+    } catch(Exception $e) {
+      return FALSE;
+    }
+  }
+
+  //  Updates a row in the records table
+  public function update($id, $column, $value) {
+    try {
+      //  Prepare SQL statement for updating a row in the records table
+      pg_prepare($this->getConnection(), "update_record", "UPDATE records SET $2 = $3 WHERE id = $1;");
+
+      //  Execute prepared statement
+      pg_execute($this->getConnection(), "update_record", array($id, $column, $value));
+
       return TRUE;
     } catch(Exception $e) {
       return FALSE;
@@ -69,12 +180,40 @@ class DatabaseConnection {
   //  Drops the records table
   public function drop() {
     try {
+      //  Only try to run if the table exists
+      if(!$this->test()) return;
+
+      //  Prepare SQL statement for dropping a table called 'records'
       pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+
+      //  Execute prepared statement
       pg_execute($this->getConnection(), "drop_records", array());
+
       return TRUE;
     } catch(Exception $e) {
       return FALSE;
     }
+  }
+
+  //  Create table 'records'
+  function createTable() {
+    try {
+      //  Prepare SQL statement for creating a table called 'records'
+      pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
+        id SERIAL PRIMARY KEY,
+        name CHARACTER VARYING(100),
+        amazing_level INT,
+        country CHARACTER VARYING(100)
+      );");
+
+      //  Execute prepared statement
+      pg_execute($this->getConnection(), "create_table", array());
+
+      return TRUE;
+    } catch(Exception $e) {
+      return FALSE;
+    }
+
   }
 
   //  Establish connection to database
@@ -105,22 +244,13 @@ class DatabaseConnection {
     //  Don't run if things are all setup
     if($this->test()) return;
 
-    //  Prepare SQL statement for creating a table called 'records'
-    pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
-      id SERIAL PRIMARY KEY,
-      name CHARACTER VARYING(100),
-      amazing_level INT,
-      country CHARACTER VARYING(100)
-    );");
-
-    //  Execute prepared statement
-    pg_execute($this->getConnection(), "create_table", array());
+    $this->createTable();
 
     //  Create some fake records
     $this->create("Sugababes", 9, "England");
     $this->create("Kylie Minogue", 10, "Australia");
     $this->create("2 Unlimited", 8, "Germany");
-    $this->create("Brooklyn Bounce", 8, "United States");
+    $this->create("Brooklyn Bounce", 7, "United States");
   }
 
 }
