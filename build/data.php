@@ -10,8 +10,8 @@ try {
     'status' => 'OK',
     'record' => [
       'name' => 'Kylie Minogie', 
-      'position', 'Singer',
-      'country', 'Australia',
+      'position' => 'Singer',
+      'country' => 'Australia',
     ]
   ];
 } catch(Exception $exception) {
