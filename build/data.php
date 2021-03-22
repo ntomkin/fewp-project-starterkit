@@ -51,7 +51,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
     //  Use DatabaseConnection to get the row
-    $db->get($name, $amazingLevel, $country);
+    $db->get($id);
 
     break;
 }
