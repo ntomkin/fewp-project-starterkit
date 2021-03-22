@@ -29,7 +29,7 @@ echo json_encode($result);
 class DatabaseConnection {
   public $connection;
 
-  public function construct() {
+  function __construct() {
     $this->connect();
   }
 
@@ -53,13 +53,13 @@ class DatabaseConnection {
 
   function test() {
     //  Test if records table exists
-    $results = pg_query($this->connection, "SELECT * FROM records LIMIT 1");
+    $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
     return pg_num_rows($results);
   }
 
   function setup() {
     //  Creates record table
-    $this->connection->exec('CREATE TABLE IF NOT EXISTS records (
+    $this->getConnection()->exec('CREATE TABLE IF NOT EXISTS records (
       id SERIAL PRIMARY KEY,
       name CHARACTER VARYING(100),
       amazing_level INT,
