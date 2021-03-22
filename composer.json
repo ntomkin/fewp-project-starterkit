@@ -7,6 +7,7 @@
             "npm run build"
         ],
         "deploy": [
+            "npm run build",
             "git add .",
             "git commit -m'Application update'",
             "git push -f heroku master"
