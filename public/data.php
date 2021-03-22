@@ -157,8 +157,6 @@ class DatabaseConnection {
   //  Creates a row in the records table
   public function create($name, $amazingLevel, $country) {
     try {
-      //  Prepare SQL statement for creating a row in the records table
-      @pg_query($this->getConnection(), "DEALLOCATE create_record");
       @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ('$1', '$2', '$3') RETURNING id;");
       
       //  Execute prepared statement
@@ -174,7 +172,6 @@ class DatabaseConnection {
   //  Updates a row in the records table
   public function update($id, $name, $amazingLevel, $country) {
     try {
-      @pg_query($this->getConnection(), "DEALLOCATE update_record");
       @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = '$3', country = '$4' WHERE id = $1;");
   
       //  Execute prepared statement
@@ -189,7 +186,6 @@ class DatabaseConnection {
   //  Updates a row in the records table
   public function delete($id) {
     try {
-      @pg_query($this->getConnection(), "DEALLOCATE delete_record");
       @pg_prepare($this->getConnection(), "delete_record", "DELETE FROM records WHERE id = $1;");
 
       //  Execute prepared statement
@@ -204,8 +200,6 @@ class DatabaseConnection {
   //  Drops the records table
   public function drop() {
     try {
-
-      @pg_query($this->getConnection(), "DEALLOCATE drop_records");
       @pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
 
       //  Execute prepared statement
@@ -220,7 +214,6 @@ class DatabaseConnection {
   //  Create table 'records'
   function createTable() {
     try {
-      @pg_query($this->getConnection(), "DEALLOCATE create_table");
       @pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
         id SERIAL PRIMARY KEY,
         name CHARACTER VARYING(100),
