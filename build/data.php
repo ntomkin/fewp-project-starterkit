@@ -26,6 +26,13 @@ try {
 echo json_encode($result);
 
 
+class HandleRequest {
+  function __construct() {
+    
+  }
+}
+
+
 class DatabaseConnection {
   public $connection;
 
@@ -56,7 +63,7 @@ class DatabaseConnection {
 
   function test() {
     //  Test if records table exists
-    $results = pg_query($this->getConnection(), "SELECT * FROM records WHERE id = $id");
+    $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
     $row = pg_fetch_row($results, 0);
     return $row;
   }
