@@ -157,6 +157,10 @@ class DatabaseConnection {
   //  Creates a row in the records table
   public function create($name, $amazingLevel, $country) {
     try {
+      //  Prepare SQL statement for creating a row in the records table
+      @pg_query($this->getConnection(), "DEALLOCATE create_record");
+      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+      
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
 
@@ -170,6 +174,9 @@ class DatabaseConnection {
   //  Updates a row in the records table
   public function update($id, $name, $amazingLevel, $country) {
     try {
+      @pg_query($this->getConnection(), "DEALLOCATE update_record");
+      @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = $3, country = '$4' WHERE id = $1;");
+  
       //  Execute prepared statement
       pg_execute($this->getConnection(), "update_record", array($id, $name, $amazingLevel, $country));
 
@@ -182,6 +189,9 @@ class DatabaseConnection {
   //  Updates a row in the records table
   public function delete($id) {
     try {
+      @pg_query($this->getConnection(), "DEALLOCATE delete_record");
+      @pg_prepare($this->getConnection(), "delete_record", "DELETE FROM records WHERE id = $1;");
+
       //  Execute prepared statement
       pg_execute($this->getConnection(), "delete_record", array($id));
 
@@ -194,8 +204,9 @@ class DatabaseConnection {
   //  Drops the records table
   public function drop() {
     try {
-      //  Only try to run if the table exists
-      if(!$this->test()) return;
+
+      @pg_query($this->getConnection(), "DEALLOCATE drop_records");
+      @pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
 
       //  Execute prepared statement
       pg_execute($this->getConnection(), "drop_records", array());
@@ -209,6 +220,14 @@ class DatabaseConnection {
   //  Create table 'records'
   function createTable() {
     try {
+      @pg_query($this->getConnection(), "DEALLOCATE create_table");
+      @pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
+        id SERIAL PRIMARY KEY,
+        name CHARACTER VARYING(100),
+        amazing_level INT,
+        country CHARACTER VARYING(100)
+      );");
+
       //  Execute prepared statement
       pg_execute($this->getConnection(), "create_table", array());
 
@@ -238,41 +257,10 @@ class DatabaseConnection {
   function test() {
     $results = @pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
     return $results ? TRUE : FALSE;
-  }
-
-  function statements() {
-
-    //  Prepare SQL statement for creating a row in the records table
-    @pg_query($this->getConnection(), "DEALLOCATE create_record");
-    @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
-
-    //  Prepare SQL statement for deleting a row in the records table
-    @pg_query($this->getConnection(), "DEALLOCATE delete_record");
-    @pg_prepare($this->getConnection(), "delete_record", "DELETE FROM records WHERE id = $1;");
-
-    //  Prepare SQL statement for updating a row in the records table
-    @pg_query($this->getConnection(), "DEALLOCATE update_record");
-    @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = $3, country = '$4' WHERE id = $1;");
-
-    //  Prepare SQL statement for dropping a table called 'records'
-    @pg_query($this->getConnection(), "DEALLOCATE drop_records");
-    @pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
-
-    //  Prepare SQL statement for creating a table called 'records'
-    @pg_query($this->getConnection(), "DEALLOCATE create_table");
-    @pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
-      id SERIAL PRIMARY KEY,
-      name CHARACTER VARYING(100),
-      amazing_level INT,
-      country CHARACTER VARYING(100)
-    );");
-  }
+  }}
 
   //  Creates record table and inserts a few fake records
   function setup() {
-    //  SQL prepared statements
-    $this->statements();
-
     //  Comment out this line to start fresh
     if($this->test()) return;
 
