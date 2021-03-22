@@ -86,7 +86,7 @@ class App extends React.Component {
   }
 
   runTests() {
-    console.info("Test: get a single row");
+    console.log("Test: get a single row");
     this.get(1)
       .then(function(res) {
         console.table(res);
@@ -96,7 +96,7 @@ class App extends React.Component {
         console.table(err);
       });
 
-    console.info("Test: get all rows");
+    console.log("Test: get all rows");
     this.all()
       .then(function(res) {
         console.table(res);
