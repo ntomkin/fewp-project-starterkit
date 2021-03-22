@@ -43,7 +43,7 @@ class DatabaseConnection {
     $results = pg_query($this->getConnection(), "SELECT * FROM records WHERE id = $id");
     $row = pg_fetch_assoc($results, 0);
 
-    return json_encode($row);
+    return $row;
   }
 
   public function create($name, $amazingLevel, $country) {
