@@ -9,6 +9,8 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 //  Establish a connection to database
 $db = new DatabaseConnection();
 
+$data = [];
+
 //  Determine the type of incoming request
 switch($_SERVER["REQUEST_METHOD"]) {
 
