@@ -5,6 +5,11 @@
     "scripts": {
         "setup": [
             "npm run build"
+        ],
+        "deploy": [
+            "git add .",
+            "git commit -m'Application update'",
+            "git push -f heroku master"
         ]
     }
 }

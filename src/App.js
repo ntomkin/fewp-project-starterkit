@@ -14,9 +14,11 @@ class App extends React.Component {
   //  This example shows us how to get data from our database
   //  Note: in order for this to work, you need to deploy this
   //  application at least once, so that `app/data.php` exists
-  //  on Heroku
+  //  on Heroku. It uses a library called axios. Think of this
+  //  as an alternative to jQuery's .get, .post
+  //  https://www.npmjs.com/package/axios#example
+  
   getDataExample() {
-    // https://www.npmjs.com/package/axios#example
     axios.get(process.env.REACT_APP_URL + '/data.php')
       .then(function(res) {
         console.log(res);
