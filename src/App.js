@@ -82,9 +82,9 @@ class App extends React.Component {
   create(name, amazingLevel, country) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
     let params = {
-      name: name, 
-      amazing_level: amazingLevel,
-      country: country
+      'name': name, 
+      'amazing_level': amazingLevel,
+      'country': country
     };
     return axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
       .then(function(res) {
