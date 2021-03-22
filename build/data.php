@@ -121,7 +121,10 @@ class DatabaseConnection {
     
     $this->connect();
 
-    if(!$this->test()) $this->setup();
+    if(!$this->test()) {
+      $this->setup();
+      return;
+    }
 
     //  Prepare SQL statement for creating a row in the records table
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
