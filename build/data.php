@@ -16,13 +16,13 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
   case "PUT": //  Request: Update a row
 
-    var_dump($_GET['id'], $_POST['name']);
+    var_dump($_GET['id'], $_REQUEST['name']);
 
     //  Get parameters posted to this script
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_ENCODED);
+    $name = filter_input(INPUT_POST, 'name', FILTER_DEFAULT);
     $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_VALIDATE_INT);
-    $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_ENCODED);
+    $country = filter_input(INPUT_POST, 'country', FILTER_DEFAULT);
     
     //  Use DatabaseConnection to make the update
     $db->update($id, $name, $amazingLevel, $country);
