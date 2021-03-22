@@ -65,9 +65,6 @@ class DatabaseConnection {
     try {
       //  Test if records table exists
       $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
-      var_dump("Hey", $results);
-      error_log("hey");
-      error_log($results);
       if(!$results) $this->setup();
       $row = pg_fetch_row($results, 0);
       return $row;
