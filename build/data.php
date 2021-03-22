@@ -44,9 +44,9 @@ switch($_SERVER["REQUEST_METHOD"]) {
   case "POST": //  Request: Insert a row
 
     //  Get parameters posted to this script
-    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_ENCODED);
-    $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_VALIDATE_INT);
-    $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_ENCODED);
+    $name = filter_input(INPUT_POST, 'name', FILTER_DEFAULT);
+    $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_DEFAULT);
+    $country = filter_input(INPUT_POST, 'country', FILTER_DEFAULT);
 
     var_dump($name, $amazingLevel, $country);
 
