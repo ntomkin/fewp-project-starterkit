@@ -125,23 +125,6 @@ class DatabaseConnection {
       $this->setup();
       return;
     }
-
-    //  Prepare SQL statement for creating a row in the records table
-    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
-
-    //  Prepare SQL statement for updating a row in the records table
-    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET `name` = $2, `amazing_level` = $3, `country` = $4 WHERE id = $1;");
-
-    //  Prepare SQL statement for dropping a table called 'records'
-    pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
-
-    //  Prepare SQL statement for creating a table called 'records'
-    pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
-      id SERIAL PRIMARY KEY,
-      name CHARACTER VARYING(100),
-      amazing_level INT,
-      country CHARACTER VARYING(100)
-    );");
   }
   
   //  Get a row from the records table
@@ -239,6 +222,23 @@ class DatabaseConnection {
 
   //  Creates record table and inserts a few fake records
   function setup() {
+
+    //  Prepare SQL statement for creating a row in the records table
+    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+
+    //  Prepare SQL statement for updating a row in the records table
+    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET `name` = $2, `amazing_level` = $3, `country` = $4 WHERE id = $1;");
+
+    //  Prepare SQL statement for dropping a table called 'records'
+    pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+
+    //  Prepare SQL statement for creating a table called 'records'
+    pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
+      id SERIAL PRIMARY KEY,
+      name CHARACTER VARYING(100),
+      amazing_level INT,
+      country CHARACTER VARYING(100)
+    );");
     
     //  Don't run if things are all setup
     if($this->test()) return;
