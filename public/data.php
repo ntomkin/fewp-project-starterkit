@@ -4,6 +4,7 @@ require '../vendor/autoload.php';
 //  Allows us to communicate with this PHP script from our front-end application
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
 //  Establish a connection to database
 $db = new DatabaseConnection();
@@ -23,7 +24,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     $db->update($id, $name, $amazingLevel, $country);
 
     $data = ['id' => $id, 'name' => $name, 'amazing_level' => $amazingLevel, 'country' => $country];
-    
+
     break;
   
   case "DELETE": //  Request: Delete a row
