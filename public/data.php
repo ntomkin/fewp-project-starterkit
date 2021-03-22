@@ -151,12 +151,10 @@ class DatabaseConnection {
       pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
 
       //  Execute prepared statement
-      $id = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
+      $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
 
-      var_dump(pg_fetch_array($id));
-      error_log($id);
-
-      return TRUE;
+      //  Return ID of created row
+      return pg_fetch_array($result)[0];
     } catch(Exception $e) {
       return FALSE;
     }
