@@ -4,6 +4,8 @@ require_once('../vendor/autoload.php');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
+$dbc = new DatabaseConnection();
+$dbc->get(1);
 
 try {
   $result = [
