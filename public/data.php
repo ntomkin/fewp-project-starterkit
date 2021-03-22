@@ -82,7 +82,7 @@ class DatabaseConnection {
       country CHARACTER VARYING(100)
     );");
 
-    $result = pg_execute($this->getConnection(), "create_table");
+    $result = pg_execute($this->getConnectionString(), "create_table");
   }
 
   function getConnectionString() {
