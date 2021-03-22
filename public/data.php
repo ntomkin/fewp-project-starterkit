@@ -10,7 +10,7 @@ try {
     'status' => 'OK',
     'record' => [
       'name' => 'Kylie Minogie', 
-      'position' => 'Singer',
+      'amazing_level' => '10',
       'country' => 'Australia',
     ]
   ];

@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import SingerProfile from './SingerProfile';
 import React from 'react';
 import axios from 'axios';
 
@@ -7,8 +7,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {data: null};
-
-    this.getDataExample();
   }
 
   //  This example shows us how to get data from our database
@@ -19,32 +17,28 @@ class App extends React.Component {
   //  https://www.npmjs.com/package/axios#example
 
   getDataExample() {
+    let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
     axios.get(process.env.REACT_APP_URL + '/data.php')
       .then(function(res) {
-        console.log(res.data.data);
+        //  We'll set our local state to the record returned from the example
+        that.setState({data: res.data.record});
       })
       .catch(function(err) {
         console.log(err);
       });
   }
 
+  //  componentDidMount runs when React has finished loading
+  //  and rendering the component. A great time to try to
+  //  get data.
+  componentDidMount() {
+    this.getDataExample();
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <SingerProfile profile={this.state.data} />
       </div>
     );
     }
