@@ -53,7 +53,7 @@ class DatabaseConnection {
 
   public function create($name, $amazingLevel, $country) {
     //  Creates record table
-    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES (?, ?, ?);");
+    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ('?', ?, '?');");
 
     pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
   }
