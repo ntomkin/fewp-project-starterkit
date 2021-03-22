@@ -41,7 +41,7 @@ class DatabaseConnection {
   public function get($id) {
     //  We both know this isn't good enough, as it isn't filtering. Please make sure you do that :)
     $results = pg_query($this->getConnection(), "SELECT * FROM records WHERE id = $id");
-    $row = pg_fetch_row($results, 0);
+    $row = pg_fetch_assoc($results, 0);
 
     return json_encode($row);
   }
