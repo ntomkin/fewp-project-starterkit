@@ -42,7 +42,7 @@ class DatabaseConnection {
     error_log("THISSSSS_----------");
     error_log($this->test());
 
-    if(!$this->test()) $this->setup();
+    $this->test();
   }
 
   public function get($id) {
@@ -62,10 +62,14 @@ class DatabaseConnection {
   }
 
   function test() {
-    //  Test if records table exists
-    $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
-    $row = pg_fetch_row($results, 0);
-    return $row;
+    try {
+      //  Test if records table exists
+      $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
+      $row = pg_fetch_row($results, 0);
+      return $row;
+    } catch(Exception $e) {
+      $this->setup();
+    }
   }
 
   function setup() {
