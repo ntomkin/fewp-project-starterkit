@@ -120,6 +120,7 @@ class DatabaseConnection {
   function __construct() {
     
     $this->connect();
+    $this->statements();
 
     $this->drop();
 
@@ -178,9 +179,6 @@ class DatabaseConnection {
       //  Only try to run if the table exists
       if(!$this->test()) return;
 
-      //  Prepare SQL statement for dropping a table called 'records'
-      pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
-
       //  Execute prepared statement
       pg_execute($this->getConnection(), "drop_records", array());
 
@@ -225,14 +223,15 @@ class DatabaseConnection {
     return $results ? TRUE : FALSE;
   }
 
-  //  Creates record table and inserts a few fake records
-  function setup() {
-
+  function statements() {
     //  Prepare SQL statement for creating a row in the records table
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
 
     //  Prepare SQL statement for updating a row in the records table
     pg_prepare($this->getConnection(), "update_record", "UPDATE records SET `name` = $2, `amazing_level` = $3, `country` = $4 WHERE id = $1;");
+
+    //  Prepare SQL statement for dropping a table called 'records'
+    pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
 
     //  Prepare SQL statement for creating a table called 'records'
     pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
@@ -241,6 +240,10 @@ class DatabaseConnection {
       amazing_level INT,
       country CHARACTER VARYING(100)
     );");
+  }
+
+  //  Creates record table and inserts a few fake records
+  function setup() {
     
     //  Don't run if things are all setup
     if($this->test()) return;
