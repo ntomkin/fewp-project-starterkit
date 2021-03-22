@@ -177,6 +177,18 @@ class DatabaseConnection {
     }
   }
 
+  //  Updates a row in the records table
+  public function delete($id) {
+    try {
+      //  Execute prepared statement
+      pg_execute($this->getConnection(), "delete_record", array($id));
+
+      return TRUE;
+    } catch(Exception $e) {
+      return FALSE;
+    }
+  }
+
   //  Drops the records table
   public function drop() {
     try {
@@ -228,27 +240,25 @@ class DatabaseConnection {
   }
 
   function statements() {
-    @pg_query($this->getConnection(), "DEALLOCATE create_record");
 
     //  Prepare SQL statement for creating a row in the records table
+    @pg_query($this->getConnection(), "DEALLOCATE create_record");
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
 
-    //  Delete prepared statement, if one exists
-    @pg_query($this->getConnection(), "DEALLOCATE update_record");
+    //  Prepare SQL statement for deleting a row in the records table
+    @pg_query($this->getConnection(), "DEALLOCATE delete_record");
+    pg_prepare($this->getConnection(), "delete_record", "DELETE FROM records WHERE id = $1;");
 
     //  Prepare SQL statement for updating a row in the records table
+    @pg_query($this->getConnection(), "DEALLOCATE update_record");
     pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = $2, amazing_level = $3, country = $4 WHERE id = $1;");
 
-    //  Delete prepared statement, if one exists
-    @pg_query($this->getConnection(), "DEALLOCATE drop_records");
-
     //  Prepare SQL statement for dropping a table called 'records'
+    @pg_query($this->getConnection(), "DEALLOCATE drop_records");
     pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
 
-    //  Delete prepared statement, if one exists
-    @pg_query($this->getConnection(), "DEALLOCATE create_table");
-
     //  Prepare SQL statement for creating a table called 'records'
+    @pg_query($this->getConnection(), "DEALLOCATE create_table");
     pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
       id SERIAL PRIMARY KEY,
       name CHARACTER VARYING(100),
@@ -260,7 +270,7 @@ class DatabaseConnection {
   //  Creates record table and inserts a few fake records
   function setup() {
     //  Comment out this line to start fresh
-    if($this->test()) return;
+    //if($this->test()) return;
 
     //  Setup SQL statements and create table
     $this->statements();
