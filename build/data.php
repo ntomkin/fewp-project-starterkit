@@ -12,7 +12,6 @@ $db = new DatabaseConnection();
 $data = [];
 
 //  Determine the type of incoming request
-var_dump($_POST);exit;
 switch($_SERVER["REQUEST_METHOD"]) {
 
   case "PUT": //  Request: Update a row

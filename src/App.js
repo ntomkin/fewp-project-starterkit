@@ -49,11 +49,11 @@ class App extends React.Component {
 
   update(id, name, amazingLevel, country) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    let params = {
-      name: name, 
-      amazing_level: amazingLevel,
-      country: country
-    };
+    let params = new URLSearchParams();
+    params.append('name', name);
+    params.append('amazing_level', amazingLevel);
+    params.append('country', country);
+    
     return axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
@@ -81,11 +81,11 @@ class App extends React.Component {
 
   create(name, amazingLevel, country) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    let params = {
-      'name': name, 
-      'amazing_level': amazingLevel,
-      'country': country
-    };
+    let params = new URLSearchParams();
+    params.append('name', name);
+    params.append('amazing_level', amazingLevel);
+    params.append('country', country);
+
     return axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
       .then(function(res) {
         let data = {name: name, amazing_level: amazingLevel, country: country};
