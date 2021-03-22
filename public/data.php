@@ -11,7 +11,7 @@ try {
   $result = [
     'status' => 'OK',
     'record' => [
-      'name' => 'Kylie Minogie', 
+      'name' => 'Kylie Minogue', 
       'amazing_level' => '10',
       'country' => 'Australia',
     ]
@@ -31,6 +31,8 @@ class DatabaseConnection {
 
   function __construct() {
     $this->connect();
+
+    if(!$this->test()) $this->setup();
   }
 
   public function get($id) {
@@ -46,8 +48,6 @@ class DatabaseConnection {
   }
 
   function getConnection() {
-    if(!$this->test()) $this->setup();
-
     return $this->connection;
   }
 
