@@ -75,14 +75,14 @@ class DatabaseConnection {
 
   function setup() {
     //  Creates record table
-    $result = pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
+    pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
       id SERIAL PRIMARY KEY,
       name CHARACTER VARYING(100),
       amazing_level INT,
       country CHARACTER VARYING(100)
     );");
 
-    $result = pg_execute($this->getConnectionString(), "create_table");
+    pg_execute($this->getConnection(), "create_table", array());
   }
 
   function getConnectionString() {
