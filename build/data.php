@@ -159,7 +159,7 @@ class DatabaseConnection {
     try {
       //  Prepare SQL statement for creating a row in the records table
       @pg_query($this->getConnection(), "DEALLOCATE create_record");
-      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ('$1', '$2', '$3') RETURNING id;");
       
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
