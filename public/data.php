@@ -5,6 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 $dbc = new DatabaseConnection();
+$dbc->create("Kylie Minogue", 10, "Australia");
 $record = $dbc->get(1);
 var_dump($record);
 
@@ -48,6 +49,13 @@ class DatabaseConnection {
     $row = pg_fetch_row($results, 0);
 
     return json_encode($row);
+  }
+
+  public function create($name, $amazingLevel, $country) {
+    //  Creates record table
+    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES (?, ?, ?);");
+
+    pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
   }
 
   function connect() {
