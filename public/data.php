@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 $dbc = new DatabaseConnection();
-$dbc->create("Kylie Minogue", 10, "Australia");
+
 $record = $dbc->get(1);
 
 try {
@@ -47,7 +47,7 @@ class DatabaseConnection {
   }
 
   public function create($name, $amazingLevel, $country) {
-    //  Creates record table
+    //  Creates a row in the records table
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3);");
     pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
   }
@@ -73,6 +73,9 @@ class DatabaseConnection {
   }
 
   function setup() {
+    //  Don't run if things are all setup
+    if($this->test()) return;
+
     //  Creates record table
     pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
       id SERIAL PRIMARY KEY,
@@ -82,6 +85,12 @@ class DatabaseConnection {
     );");
 
     pg_execute($this->getConnection(), "create_table", array());
+
+    //  Create some fake records to read
+    $this->create("Kylie Minogue", 10, "Australia");
+    $this->create("Sugababes", 9, "England");
+    $this->create("2 Unlimited", 8, "Germany");
+    $this->create("Brooklyn Bounce", 8, "United States");
   }
 
   function getConnectionString() {
