@@ -118,12 +118,27 @@ class DatabaseConnection {
   public $connection;
 
   function __construct() {
+    
     $this->connect();
 
-    
-    $this->drop();
-
     if(!$this->test()) $this->setup();
+
+    //  Prepare SQL statement for creating a row in the records table
+    pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+
+    //  Prepare SQL statement for updating a row in the records table
+    pg_prepare($this->getConnection(), "update_record", "UPDATE records SET $2 = $3 WHERE id = $1;");
+
+    //  Prepare SQL statement for dropping a table called 'records'
+    pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+
+    //  Prepare SQL statement for creating a table called 'records'
+    pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
+      id SERIAL PRIMARY KEY,
+      name CHARACTER VARYING(100),
+      amazing_level INT,
+      country CHARACTER VARYING(100)
+    );");
   }
   
   //  Get a row from the records table
@@ -147,9 +162,6 @@ class DatabaseConnection {
   //  Creates a row in the records table
   public function create($name, $amazingLevel, $country) {
     try {
-      //  Prepare SQL statement for creating a row in the records table
-      pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
-
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
 
@@ -163,9 +175,6 @@ class DatabaseConnection {
   //  Updates a row in the records table
   public function update($id, $column, $value) {
     try {
-      //  Prepare SQL statement for updating a row in the records table
-      pg_prepare($this->getConnection(), "update_record", "UPDATE records SET $2 = $3 WHERE id = $1;");
-
       //  Execute prepared statement
       pg_execute($this->getConnection(), "update_record", array($id, $column, $value));
 
@@ -181,9 +190,6 @@ class DatabaseConnection {
       //  Only try to run if the table exists
       if(!$this->test()) return;
 
-      //  Prepare SQL statement for dropping a table called 'records'
-      pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
-
       //  Execute prepared statement
       pg_execute($this->getConnection(), "drop_records", array());
 
@@ -196,14 +202,6 @@ class DatabaseConnection {
   //  Create table 'records'
   function createTable() {
     try {
-      //  Prepare SQL statement for creating a table called 'records'
-      pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
-        id SERIAL PRIMARY KEY,
-        name CHARACTER VARYING(100),
-        amazing_level INT,
-        country CHARACTER VARYING(100)
-      );");
-
       //  Execute prepared statement
       pg_execute($this->getConnection(), "create_table", array());
 
