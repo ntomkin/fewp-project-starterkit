@@ -238,6 +238,8 @@ class DatabaseConnection {
   //  Creates record table and inserts a few fake records
   function setup() {
 
+    $this->drop();
+
     if($this->test()) return;
 
     //  Setup SQL statements and create table
