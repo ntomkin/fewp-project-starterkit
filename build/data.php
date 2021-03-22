@@ -157,13 +157,13 @@ class DatabaseConnection {
   //  Creates a row in the records table
   public function create($name, $amazingLevel, $country) {
     try {
-      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ('$1', '$2', '$3') RETURNING id;");
+      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ('$1', '$2', '$3');");
       
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
 
       //  Return ID of created row
-      return pg_fetch_array($result)[0];
+      return TRUE;
     } catch(Exception $e) {
       return FALSE;
     }
