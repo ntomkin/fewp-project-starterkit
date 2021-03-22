@@ -5,7 +5,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 $dbc = new DatabaseConnection();
-$dbc->get(1);
+$record = $dbc->get(1);
+var_dump($record);
 
 try {
   $result = [
@@ -38,10 +39,6 @@ class DatabaseConnection {
 
   function __construct() {
     $this->connect();
-
-    error_log("THISSSSS_----------");
-    error_log($this->test());
-
     $this->test();
   }
 
