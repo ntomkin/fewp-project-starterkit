@@ -1,5 +1,8 @@
 <?php
-require_once('../vendor/autoload.php');
+require '../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
+$dotenv->load();
 
 //  Allows us to communicate with this PHP script from our front-end application
 header("Access-Control-Allow-Origin: *");
@@ -45,21 +48,24 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
     break;
 
-  case "GET": //  Request: Get a row
+  case "GET": //  Request: Get a row/all rows
 
     //  Get parameters posted to this script
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-    //  Use DatabaseConnection to get the row
-    $db->get($id);
+    if(isset($id)) {
+      //  Use DatabaseConnection to get the row
+      $data = $db->get($id);
+    } else {
+      //  Use DatabaseConnection to get all rows
+      $data = $db->all();
+    }
 
     break;
 }
 
-$dbc = new DatabaseConnection();
-
-$record = $dbc->get(1);
-
+//  Output JSON payout
+echo HandleRequest::parse($data);
 
 //  -------------------------------------------------------------------------
 //
@@ -110,7 +116,7 @@ class HandleRequest {
 //  $db->create("Kylie Minogue", 10, "Australia");
 //
 //  Updating a row:
-//  $db->update(1, "name", "2 Unlimited");
+//  $db->update(1, "2 Unlimited", 7, "Belgium");
 //
 //  -------------------------------------------------------------------------
 
@@ -118,7 +124,6 @@ class DatabaseConnection {
   public $connection;
 
   function __construct() {
-    
     $this->connect();
     $this->setup();
   }
@@ -127,7 +132,7 @@ class DatabaseConnection {
   public function get($id) {
     //  Get a specific row by 'id', return as an associative array
     $results = pg_query_params($this->getConnection(), "SELECT * FROM records WHERE id = $1 ORDER BY name LIMIT 1", array($id));
-    $row = pg_fetch_assoc($results, 0);
+    $row = pg_fetch_assoc($results);
 
     return $row;
   }
@@ -136,7 +141,7 @@ class DatabaseConnection {
   public function all() {
     //  Get all rows, return them as an associative array
     $results = pg_query($this->getConnection(), "SELECT * FROM records ORDER BY name");
-    $rows = pg_fetch_assoc($results);
+    $rows = pg_fetch_all($results);
 
     return $rows;
   }
@@ -212,19 +217,30 @@ class DatabaseConnection {
 
   //  Test if records table exists
   function test() {
-    $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
-    return pg_fetch_array($results)[0] ? TRUE : FALSE;
+    $results = @pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
+    return pg_fetch_array($results) ? TRUE : FALSE;
   }
 
   function statements() {
+    @pg_query($this->getConnection(), "DEALLOCATE create_record");
+
     //  Prepare SQL statement for creating a row in the records table
     pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3) RETURNING id;");
+
+    //  Delete prepared statement, if one exists
+    @pg_query($this->getConnection(), "DEALLOCATE update_record");
 
     //  Prepare SQL statement for updating a row in the records table
     pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = $2, amazing_level = $3, country = $4 WHERE id = $1;");
 
+    //  Delete prepared statement, if one exists
+    @pg_query($this->getConnection(), "DEALLOCATE drop_records");
+
     //  Prepare SQL statement for dropping a table called 'records'
     pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+
+    //  Delete prepared statement, if one exists
+    @pg_query($this->getConnection(), "DEALLOCATE create_table");
 
     //  Prepare SQL statement for creating a table called 'records'
     pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
@@ -237,7 +253,8 @@ class DatabaseConnection {
 
   //  Creates record table and inserts a few fake records
   function setup() {
-    if($this->test()) return;
+    //  Comment out this line to start fresh
+    //if($this->test()) return;
 
     //  Setup SQL statements and create table
     $this->statements();
