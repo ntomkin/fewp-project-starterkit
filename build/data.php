@@ -16,6 +16,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
   case "PUT": //  Request: Update a row
 
+    var_dump($_GET['id'], $_POST['name']);
+
     //  Get parameters posted to this script
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_ENCODED);
