@@ -256,7 +256,9 @@ class DatabaseConnection {
   //  Test if records table exists
   function test() {
     $results = @pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
-    return $results ? TRUE : FALSE;
+    $data = pg_fetch_assoc($results);
+    var_dump($data);
+    return pg_fetch_assoc($results) ? TRUE : FALSE;
   }
 
   //  Creates record table and inserts a few fake records
