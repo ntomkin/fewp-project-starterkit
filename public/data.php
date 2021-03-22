@@ -35,7 +35,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     //  Use DatabaseConnection to delete the row
     $db->delete($id);
 
-    $data = 'Successfully deleted';
+    $data = ['id' => $id];
 
     break;
 

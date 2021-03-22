@@ -54,7 +54,7 @@ class App extends React.Component {
       amazing_level: amazingLevel,
       country: country
     };
-    axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
+    return axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
@@ -88,7 +88,6 @@ class App extends React.Component {
     };
     return axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
       .then(function(res) {
-        console.log(res);
         let data = {name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
         return data;
@@ -120,20 +119,10 @@ class App extends React.Component {
         console.table(err);
       });
 
-    console.log("Test: delete row 1");
-    this.delete(1)
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
-
     console.log("Test: delete a single row");
     this.delete(1)
       .then(function(res) {
-        console.table(res);
+        console.log(res);
       })
       .catch(function(err) {
         console.log("Failed");
@@ -142,6 +131,17 @@ class App extends React.Component {
 
     console.log("Test: create a single row");
     this.create("Robyn", 10, "Denmark")
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+
+    console.log("Test: update a single row");
+    this.update(2, "Vengaboys", 7, "Brazil")
       .then(function(res) {
         console.table(res);
       })
