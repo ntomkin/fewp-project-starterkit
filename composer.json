@@ -1,0 +1,10 @@
+{
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "scripts": {
+        "setup": [
+            "npm run build"
+        ]
+    }
+}
