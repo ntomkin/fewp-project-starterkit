@@ -18,10 +18,11 @@ class App extends React.Component {
 
   all() {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    axios.get(process.env.REACT_APP_URL + '/data.php')
+    return axios.get(process.env.REACT_APP_URL + '/data.php')
       .then(function(res) {
         //  We'll set our local state to the rows returned from the example
         that.setState({data: res.data.data});
+        return res.data.data;
       })
       .catch(function(err) {
         console.log(err);
@@ -30,10 +31,11 @@ class App extends React.Component {
 
   get(id) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`)
+    return axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`)
       .then(function(res) {
         //  We'll set our local state to the row returned from the example
         that.setState({data: res.data.data});
+        return res.data.data;
       })
       .catch(function(err) {
         console.log(err);
@@ -83,11 +85,34 @@ class App extends React.Component {
       });
   }
 
+  runTests() {
+    console.info("Test: get a single row");
+    this.get(1)
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+    console.info("Test: get all rows");
+    this.all()
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+  }
+
   //  componentDidMount runs when React has finished loading
   //  and rendering the component. A great time to try to
   //  get data.
   componentDidMount() {
-    this.get(1);
+    this.runTests();
   }
 
   render() {
@@ -96,7 +121,7 @@ class App extends React.Component {
         <SingerProfile profile={this.state.data} />
       </div>
     );
-    }
+  }
 }
 
 export default App;

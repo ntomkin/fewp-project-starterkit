@@ -62,6 +62,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
 }
 
 //  Output JSON payout
+header('Content-Type: application/json');
 echo HandleRequest::parse($data);
 
 //  -------------------------------------------------------------------------
