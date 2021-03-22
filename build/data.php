@@ -257,8 +257,7 @@ class DatabaseConnection {
   function test() {
     $results = @pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
     $data = pg_fetch_assoc($results);
-    var_dump($data);
-    return pg_fetch_assoc($results) ? TRUE : FALSE;
+    return $data ? TRUE : FALSE;
   }
 
   //  Creates record table and inserts a few fake records
