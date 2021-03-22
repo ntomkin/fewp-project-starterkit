@@ -120,14 +120,7 @@ class DatabaseConnection {
   function __construct() {
     
     $this->connect();
-    $this->statements();
-
-    $this->drop();
-
-    if(!$this->test()) {
-      $this->setup();
-      return;
-    }
+    $this->setup();
   }
   
   //  Get a row from the records table
@@ -244,10 +237,11 @@ class DatabaseConnection {
 
   //  Creates record table and inserts a few fake records
   function setup() {
-    
-    //  Don't run if things are all setup
+
     if($this->test()) return;
 
+    //  Setup SQL statements and create table
+    $this->statements();
     $this->createTable();
 
     //  Create some fake records
