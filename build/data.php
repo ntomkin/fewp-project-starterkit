@@ -213,7 +213,7 @@ class DatabaseConnection {
   //  Test if records table exists
   function test() {
     $results = pg_query($this->getConnection(), "SELECT * FROM records LIMIT 1");
-    return $results ? TRUE : FALSE;
+    return pg_fetch_array($results)[0] ? TRUE : FALSE;
   }
 
   function statements() {
