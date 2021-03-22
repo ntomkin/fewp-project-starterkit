@@ -178,6 +178,9 @@ class DatabaseConnection {
       //  Only try to run if the table exists
       if(!$this->test()) return;
 
+      //  Prepare SQL statement for dropping a table called 'records'
+      pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
+
       //  Execute prepared statement
       pg_execute($this->getConnection(), "drop_records", array());
 
@@ -230,9 +233,6 @@ class DatabaseConnection {
 
     //  Prepare SQL statement for updating a row in the records table
     pg_prepare($this->getConnection(), "update_record", "UPDATE records SET `name` = $2, `amazing_level` = $3, `country` = $4 WHERE id = $1;");
-
-    //  Prepare SQL statement for dropping a table called 'records'
-    pg_prepare($this->getConnection(), "drop_records", "DROP TABLE records;");
 
     //  Prepare SQL statement for creating a table called 'records'
     pg_prepare($this->getConnection(), "create_table", "CREATE TABLE IF NOT EXISTS records (
