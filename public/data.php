@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 //  Allows us to communicate with this PHP script from our front-end application
 header("Access-Control-Allow-Origin: *");
