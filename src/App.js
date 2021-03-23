@@ -54,7 +54,7 @@ class App extends React.Component {
     params.append('amazing_level', amazingLevel);
     params.append('country', country);
     
-    return axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params, this.options())
+    return axios.post(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params, this.options())
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
@@ -100,10 +100,6 @@ class App extends React.Component {
 
   options() {
     return {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*'
-      }
     }
   }
 
@@ -158,15 +154,15 @@ class App extends React.Component {
     //     console.table(err);
     //   });
 
-    // console.log("Test: update a single row");
-    // this.update(2, "Vengaboys", 7, "Brazil")
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: update a single row");
+    this.update(1, "Vengaboys", 7, "Brazil")
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
 
   }
 

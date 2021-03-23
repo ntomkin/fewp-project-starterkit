@@ -13,46 +13,22 @@ $data = [];
 
 //  Determine the type of incoming request
 switch($_SERVER["REQUEST_METHOD"]) {
-
-  case "PUT": //  Request: Update a row
-
-    //  Get parameters posted to this script
-    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    $name = filter_input(INPUT_POST, 'name', FILTER_DEFAULT);
-    $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_VALIDATE_INT);
-    $country = filter_input(INPUT_POST, 'country', FILTER_DEFAULT);
-
-    var_dump($_GET['id'], $_POST['name'], $name);
-    
-    //  Use DatabaseConnection to make the update
-    $db->update($id, $name, $amazingLevel, $country);
-
-    $data = ['id' => $id, 'name' => $name, 'amazing_level' => $amazingLevel, 'country' => $country];
-
-    break;
   
-  case "DELETE": //  Request: Delete a row
-
-    //  Get parameters posted to this script
-    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-
-    //  Use DatabaseConnection to delete the row
-    $db->delete($id);
-
-    $data = ['id' => $id];
-
-    break;
-
   case "POST": //  Request: Insert a row
 
     //  Get parameters posted to this script
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
     $name = filter_input(INPUT_POST, 'name', FILTER_DEFAULT);
     $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_DEFAULT);
     $country = filter_input(INPUT_POST, 'country', FILTER_DEFAULT);
-    var_dump($_GET, $_REQUEST, $_POST);exit;
 
-    //  Use DatabaseConnection to create the row
-    $id = $db->create($name, $amazingLevel, $country);
+    if(isset($id)) {
+      //  Use DatabaseConnection to update the row
+      $db->update($id, $name, $amazingLevel, $country);
+    } else {
+      //  Use DatabaseConnection to create the row
+      $id = $db->create($name, $amazingLevel, $country);
+    }
 
     $data = ['id' => $id, 'name' => $name, 'amazing_level' => $amazingLevel, 'country' => $country];
 
@@ -72,6 +48,20 @@ switch($_SERVER["REQUEST_METHOD"]) {
     }
 
     break;
+
+
+  case "DELETE": //  Request: Delete a row
+
+    //  Get parameters posted to this script
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+    //  Use DatabaseConnection to delete the row
+    $db->delete($id);
+
+    $data = ['id' => $id];
+
+    break;
+
 }
 
 //  Output JSON payout
