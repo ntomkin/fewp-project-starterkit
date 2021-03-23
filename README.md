@@ -12,7 +12,7 @@ Starter Kit is written for this path, including scripts used within the Starter 
 
 ### What This Starter Kit Does
 
-* Includes React app in the `app/` directory. Normally you would have to run `npx create-react-app app` to accomplish this.
+* Includes React app. Normally you would have to run `npx create-react-app ./` to accomplish this.
 * Includes a database implementation, in the `app/public/data.php` file, giving you examples to work from.
 * A set of composer libraries that make it easier to read from .env files, and work with the database. 
 
