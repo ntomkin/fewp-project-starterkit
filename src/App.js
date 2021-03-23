@@ -21,7 +21,7 @@ class App extends React.Component {
 
   all() {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    return axios.get(process.env.REACT_APP_URL + '/data.php')
+    return axios.get(process.env.REACT_APP_URL + '/data.php', this.options())
       .then(function(res) {
         //  We'll set our local state to the rows returned from the example
         that.setState({all: res.data.data});
@@ -35,7 +35,7 @@ class App extends React.Component {
 
   get(id) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    return axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`)
+    return axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`, this.options())
       .then(function(res) {
         //  We'll set our local state to the row returned from the example
         that.setState({row: res.data.data});
@@ -54,7 +54,7 @@ class App extends React.Component {
     params.append('amazing_level', amazingLevel);
     params.append('country', country);
     
-    return axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
+    return axios.put(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params, this.options())
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
@@ -68,7 +68,7 @@ class App extends React.Component {
 
   delete(id) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    return axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {})
+    return axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {}, this.options())
       .then(function(res) {
         that.setState({row: null});
         return res.data.data;
@@ -86,7 +86,7 @@ class App extends React.Component {
     params.append('amazing_level', amazingLevel);
     params.append('country', country);
 
-    return axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
+    return axios.post(`${process.env.REACT_APP_URL}/data.php`, params, this.options())
       .then(function(res) {
         let data = {name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
@@ -96,6 +96,15 @@ class App extends React.Component {
         console.log(err);
         return null;
       });
+  }
+
+  options() {
+    return {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*'
+      }
+    }
   }
 
   runTests() {
@@ -109,55 +118,55 @@ class App extends React.Component {
         console.table(err);
       });
 
-    console.log("Test: get a single row");
-    this.get(1)
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: get a single row");
+    // this.get(1)
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
-    console.log("Test: create a single row");
-    this.create("Sugababes", 9, "England")
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: create a single row");
+    // this.create("Sugababes", 9, "England")
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
   
-    console.log("Test: get all rows");
-    this.all()
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: get all rows");
+    // this.all()
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
-    console.log("Test: delete a single row");
-    this.delete(1)
-      .then(function(res) {
-        console.log(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: delete a single row");
+    // this.delete(1)
+    //   .then(function(res) {
+    //     console.log(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
-    console.log("Test: update a single row");
-    this.update(2, "Vengaboys", 7, "Brazil")
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: update a single row");
+    // this.update(2, "Vengaboys", 7, "Brazil")
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
   }
 
