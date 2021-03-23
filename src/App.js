@@ -99,8 +99,6 @@ class App extends React.Component {
   }
 
   runTests() {
-
-
     console.log("Test: create a single row");
     this.create("Robyn", 10, "Denmark")
       .then(function(res) {

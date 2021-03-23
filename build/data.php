@@ -265,10 +265,10 @@ class DatabaseConnection {
     $this->createTable();
 
     //  Create some fake records
-    $this->create("Sugababes", 9, "England");
-    $this->create("Kylie Minogue", 10, "Australia");
-    $this->create("2 Unlimited", 8, "Germany");
-    $this->create("Brooklyn Bounce", 7, "United States");
+    // $this->create("Sugababes", 9, "England");
+    // $this->create("Kylie Minogue", 10, "Australia");
+    // $this->create("2 Unlimited", 8, "Germany");
+    // $this->create("Brooklyn Bounce", 7, "United States");
   }
 
 }
