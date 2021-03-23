@@ -14,7 +14,7 @@ $data = [];
 //  Determine the type of incoming request
 switch($_SERVER["REQUEST_METHOD"]) {
   
-  case "POST": //  Request: Insert a row
+  case "POST": //  Request: Insert a row/update a row
 
     //  Get parameters posted to this script
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -155,6 +155,8 @@ class DatabaseConnection {
       
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
+
+      var_dump(pg_fetch_assoc($result));
 
       //  Return ID of created row
       return TRUE;
