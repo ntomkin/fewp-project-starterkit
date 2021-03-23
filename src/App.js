@@ -104,8 +104,18 @@ class App extends React.Component {
   }
 
   runTests() {
-    console.log("Test: create a single row");
-    this.create("Robyn", 10, "Denmark")
+    // console.log("Test: create a single row");
+    // this.create("Robyn", 10, "Denmark")
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
+
+    console.log("Test: get a single row");
+    this.get(3)
       .then(function(res) {
         console.table(res);
       })
@@ -114,50 +124,30 @@ class App extends React.Component {
         console.table(err);
       });
 
-    // console.log("Test: get a single row");
-    // this.get(1)
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: update a single row");
+    this.update(3, "Vengaboys", 7, "Brazil")
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
 
-    // console.log("Test: create a single row");
-    // this.create("Sugababes", 9, "England")
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
-  
-    // console.log("Test: get all rows");
-    // this.all()
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: get all rows");
+    this.all()
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
 
     // console.log("Test: delete a single row");
-    // this.delete(1)
+    // this.delete(7)
     //   .then(function(res) {
     //     console.log(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
-
-    // console.log("Test: update a single row");
-    // this.update(2, "Vengaboys", 7, "Brazil")
-    //   .then(function(res) {
-    //     console.table(res);
     //   })
     //   .catch(function(err) {
     //     console.log("Failed");

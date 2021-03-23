@@ -60,13 +60,11 @@ called `dotenv` is used to read these environment variables into memory. You won
 * ./.env.blank: Because .env usually contains sensitive information, you don't include it in your repository. However, you can include a blank one so future 
 developers know which fields are important to fill out.
 
-* ./public/data.php: Handles interaction between the database and front-end application (React). This file is copied to `app/build` before deployment via `npm run build`.
+* ./public/data.php: Handles interaction between the database and front-end application (React). This file is copied to `build` before deployment via `npm run build`.
 
 * ./composer.json: Libraries needed for our application to run. Composer manages these libraries for us, and stores them in `vendor/`. 
 
-* ./composer.lock: composer.json is human-readable, but not necessarily efficient to work through each time dependancies are built for your application. composer.lock 
-contains much more information about the dependancies of the libraries you are using, making it easier for composer to calcuate what it needs to do. You won't see 
-this file until you run the Setup command in "Available Commands."
+* ./composer.lock: composer.json is human-readable, but not necessarily efficient to work through each time dependancies are built for your application. composer.lock contains much more information about the dependancies of the libraries you are using, making it easier for composer to calcuate what it needs to do. You won't see this file until you run the Setup command in "Available Commands."
 
 * ./vendor/: Where composer keeps its dependancies/libraries. You won't see this directory until you run the Setup command in "Available Commands."
 
