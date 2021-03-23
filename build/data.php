@@ -74,7 +74,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
 }
 
 //  Output JSON payout
-header('Content-Type: multipart/form-data');
+header('Accept: x-www-form-urlencoded');
+header('Content-Type: application/json');
 echo HandleRequest::parse($data);
 
 //  -------------------------------------------------------------------------
