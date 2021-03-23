@@ -74,7 +74,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
 }
 
 //  Output JSON payout
-header('Content-Type: application/json');
+header('Content-Type: multipart/form-data');
 echo HandleRequest::parse($data);
 
 //  -------------------------------------------------------------------------
