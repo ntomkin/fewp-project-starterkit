@@ -1,7 +1,7 @@
-import './App.css';
-import SingerProfile from './SingerProfile';
 import React from 'react';
 import axios from 'axios';
+import './App.css';
+import SingerProfile from './SingerProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class App extends React.Component {
     params.append('name', name);
     params.append('amazing_level', amazingLevel);
     params.append('country', country);
-    
+   
     return axios.post(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
@@ -104,8 +104,18 @@ class App extends React.Component {
   }
 
   runTests() {
-    // console.log("Test: create a single row");
-    // this.create("Robyn", 10, "Denmark")
+    console.log("Test: create a single row");
+    this.create("Robyn", 10, "Denmark")
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
+
+    // console.log("Test: get a single row");
+    // this.get(3)
     //   .then(function(res) {
     //     console.table(res);
     //   })
@@ -114,35 +124,25 @@ class App extends React.Component {
     //     console.table(err);
     //   });
 
-    console.log("Test: get a single row");
-    this.get(3)
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: update a single row");
+    // this.update(3, "Vengaboys", 7, "Brazil")
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
-    console.log("Test: update a single row");
-    this.update(3, "Vengaboys", 7, "Brazil")
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
-
-    console.log("Test: get all rows");
-    this.all()
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: get all rows");
+    // this.all()
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
     // console.log("Test: delete a single row");
     // this.delete(7)
@@ -174,3 +174,4 @@ class App extends React.Component {
 }
 
 export default App;
+ 
