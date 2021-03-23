@@ -19,9 +19,14 @@ class App extends React.Component {
   //  as an alternative to jQuery's .get, .post
   //  https://www.npmjs.com/package/axios#example
 
+  //  Typically speaking, you'd want to abstract the following
+  //  methods into a different component, specifically to handle
+  //  requests to the API. This gives you a quick way to jump
+  //  in and get started.
+
   all() {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    return axios.get(process.env.REACT_APP_URL + '/data.php', this.options())
+    return axios.get(process.env.REACT_APP_URL + '/data.php')
       .then(function(res) {
         //  We'll set our local state to the rows returned from the example
         that.setState({all: res.data.data});
@@ -35,11 +40,10 @@ class App extends React.Component {
 
   get(id) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    return axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`, this.options())
+    return axios.get(`${process.env.REACT_APP_URL}/data.php?id=${id}`)
       .then(function(res) {
         //  We'll set our local state to the row returned from the example
         that.setState({row: res.data.data});
-        console.log(that.state);
         return res.data.data;
       })
       .catch(function(err) {
@@ -55,11 +59,10 @@ class App extends React.Component {
     params.append('amazing_level', amazingLevel);
     params.append('country', country);
     
-    return axios.post(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params, this.options())
+    return axios.post(`${process.env.REACT_APP_URL}/data.php?id=${id}`, params)
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
-        console.log(that.state.row);
         return data;
       })
       .catch(function(err) {
@@ -70,7 +73,7 @@ class App extends React.Component {
 
   delete(id) {
     let that = this;  //  "this" changes inside of the then() function, so we'll save a reference to it
-    return axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {}, this.options())
+    return axios.delete(`${process.env.REACT_APP_URL}/data.php?id=${id}`, {})
       .then(function(res) {
         that.setState({row: null});
         return res.data.data;
@@ -88,7 +91,7 @@ class App extends React.Component {
     params.append('amazing_level', amazingLevel);
     params.append('country', country);
 
-    return axios.post(`${process.env.REACT_APP_URL}/data.php`, params, this.options())
+    return axios.post(`${process.env.REACT_APP_URL}/data.php`, params)
       .then(function(res) {
         let data = {name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
@@ -98,11 +101,6 @@ class App extends React.Component {
         console.log(err);
         return null;
       });
-  }
-
-  options() {
-    return {
-    }
   }
 
   runTests() {
@@ -116,15 +114,15 @@ class App extends React.Component {
         console.table(err);
       });
 
-    console.log("Test: get a single row");
-    this.get(1)
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: get a single row");
+    // this.get(1)
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
     // console.log("Test: create a single row");
     // this.create("Sugababes", 9, "England")
@@ -178,6 +176,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <h3>Artist Spotlight</h3>
         <SingerProfile profile={this.state.row} />
       </div>
     );

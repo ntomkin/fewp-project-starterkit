@@ -1,7 +1,7 @@
 # The Project – Starter Kit
 
 This Starter Kit will give you a boilerplate for getting your Project up and running. Within this Starter Kit there is an example of implementing Postgres as
-as your database (read), a fresh `create-react-app` project folder to build the React portion of your project, `composer` scripts to help you deploy 
+as your database, a fresh `create-react-app` project folder to build the React portion of your project, `composer` scripts to help you deploy 
 the Project on Heroku, and a few `composer` libraries to help you with handling requests.
 
 ### Disclaimer
@@ -12,9 +12,8 @@ Starter Kit is written for this path, including scripts used within the Starter 
 
 ### What This Starter Kit Does
 
-* Includes a barebones React app in the `app/` directory. Normally you would have to run `npx create-react-app app` to accomplish this.
-* Includes a partial database implementation, in the `app/public/data.php` file, giving you a SELECT example to work from. `DELETE` and `UPDATE` would still need 
-to be added by you.
+* Includes React app in the `app/` directory. Normally you would have to run `npx create-react-app app` to accomplish this.
+* Includes a database implementation, in the `app/public/data.php` file, giving you examples to work from.
 * A set of composer libraries that make it easier to read from .env files, and work with the database. 
 
 ### Getting Started

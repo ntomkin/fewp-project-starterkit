@@ -7,7 +7,7 @@ class SingerProfile extends React.Component {
 
     if(this.props.profile) {
       content = (
-        <div>
+        <div className="SingerProfileData">
           <div className="SingerName">{this.props.profile.name}</div>
           <div className="SingerAmazingLevel">{this.props.profile.amazing_level}</div>
           <div className="SingerCountry">{this.props.profile.country}</div>
