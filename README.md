@@ -20,7 +20,7 @@ Starter Kit is written for this path, including scripts used within the Starter 
 
 * Make sure you have created a Heroku account. No credit card is required for anything that we are doing.
 * Make sure you have Node.js v10+, npm v7+ and Heroku CLI installed on your computer.
-* Copy `.env.example` to `.env`. Change the `APP_URL` and `DATABASE_URL` to match your Heroku settings ([Tutorial, with examples on where to find this information](https://www.youtube.com/watch?v=Yejm3x-46Tc))
+* Copy `.env.example` to `.env`. Change the `REACT_APP_URL` and `DATABASE_URL` to match your Heroku settings ([Tutorial, with examples on where to find this information](https://www.youtube.com/watch?v=Yejm3x-46Tc))
 * Read the "Available Commands" section below, and run the Setup command.
 
 ### Available Commands
