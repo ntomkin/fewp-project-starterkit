@@ -144,18 +144,18 @@ class App extends React.Component {
         console.table(err);
       });
 
-    // console.log("Test: delete a single row");
-    // this.delete(1)
-    //   .then(function(res) {
-    //     console.log(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: delete a single row");
+    this.delete(1)
+      .then(function(res) {
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
 
     console.log("Test: update a single row");
-    this.update(1, "Vengaboys", 7, "Brazil")
+    this.update(2, "Vengaboys", 7, "Brazil")
       .then(function(res) {
         console.table(res);
       })

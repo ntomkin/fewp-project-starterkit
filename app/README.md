@@ -84,3 +84,6 @@ this file until you run the Setup command in "Available Commands."
 * PHP
     * `heroku logs` can give you feedback on errors
     * You can log errors ( like console.log() ) by using error_log()
+
+* Postgres
+    * `heroku pg:psql` gives you an SQL prompt to test queries from
