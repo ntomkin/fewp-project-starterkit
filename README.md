@@ -39,41 +39,39 @@ Starter Kit is written for this path, including scripts used within the Starter 
 
 * Local Development: 
     * Run `composer run dev`, which will automatically:
-        * Runs `yarn start` inside of the `app/` folder
+        * Runs `yarn start`
 
 * Deploy: 
     * Run `composer run deploy`, which will automatically:
-        * Runs `npm run build` inside of the `app/` folder
-        * Runs `git add .` inside of the `app/` folder
-        * Runs `git commit -m'Application update'` inside of the `app/` folder
-        * Runs `git push -f heroku master` inside of the `app/` folder
+        * Runs `npm run build`
+        * Runs `git add .`
+        * Runs `git commit -m'Application update'`
+        * Runs `git push -f heroku master`
 
 ### The Files (in no particular order)
 
-* README.md: Bra, come on, really?
-
-* app/: A barebones React application created by `create-react-app`. This is where you will spend the majority of your time writing your map-based application.
+* ./: A React application created by `create-react-app`. This is where you will spend the majority of your time writing your map-based application.
 Most of the files in this directory are based on the original directory structure. For more information, [check this out](https://github.com/facebook/create-react-app).
 
-* app/build/: When we run `npm run build` or `composer run deploy`, this folder is populated with the latest version of our React application.
+* ./build/: When we run `npm run build` or `composer run deploy`, this folder is populated with the latest version of our React application.
 
-* app/.env: Your application will get its environment-related information from here. In this case, it is largely to save our Heroku connection information. A library
+* ./.env: Your application will get its environment-related information from here. In this case, it is largely to save our Heroku connection information. A library
 called `dotenv` is used to read these environment variables into memory. You won't see this file until you complete "Getting Started" above.
 
-* app/.env.blank: Because .env usually contains sensitive information, you don't include it in your repository. However, you can include a blank one so future 
+* ./.env.blank: Because .env usually contains sensitive information, you don't include it in your repository. However, you can include a blank one so future 
 developers know which fields are important to fill out.
 
-* app/public/data.php: Handles interaction between the database and front-end application (React). This file is copied to `app/build` before deployment via `npm run build`.
+* ./public/data.php: Handles interaction between the database and front-end application (React). This file is copied to `app/build` before deployment via `npm run build`.
 
-* app/composer.json: Libraries needed for our application to run. Composer manages these libraries for us, and stores them in `vendor/`. 
+* ./composer.json: Libraries needed for our application to run. Composer manages these libraries for us, and stores them in `vendor/`. 
 
-* app/composer.lock: composer.json is human-readable, but not necessarily efficient to work through each time dependancies are built for your application. composer.lock 
+* ./composer.lock: composer.json is human-readable, but not necessarily efficient to work through each time dependancies are built for your application. composer.lock 
 contains much more information about the dependancies of the libraries you are using, making it easier for composer to calcuate what it needs to do. You won't see 
 this file until you run the Setup command in "Available Commands."
 
-* app/vendor/: Where composer keeps its dependancies/libraries. You won't see this directory until you run the Setup command in "Available Commands."
+* ./vendor/: Where composer keeps its dependancies/libraries. You won't see this directory until you run the Setup command in "Available Commands."
 
-* Procfile: Tells Heroku where to serve files from. In this case, `build/`.
+* ./Procfile: Tells Heroku where to serve files from. In this case, `build/`.
 
 
 ### Troubleshooting
