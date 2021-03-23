@@ -7,7 +7,6 @@
             "composer install",
             "npm install",
             "npm run build",
-            "git init",
             "heroku login"
         ],
         "deploy": [
