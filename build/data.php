@@ -133,7 +133,7 @@ class DatabaseConnection {
   //  Get a row from the records table
   public function get($id) {
     //  Get a specific row by 'id', return as an associative array
-    $results = pg_query_params($this->getConnection(), "SELECT * FROM records WHERE id = $1 ORDER BY name LIMIT 1", array($id));
+    $results = pg_query_params($this->getConnection(), "SELECT * FROM records WHERE id = $1 ORDER BY name LIMIT 1", array(intval($id)));
     $row = pg_fetch_assoc($results);
 
     return $row;
