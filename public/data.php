@@ -159,7 +159,7 @@ class DatabaseConnection {
   //  Creates a row in the records table
   public function create($name, $amazingLevel, $country) {
     try {
-      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ('$1', '$2', '$3');");
+      @pg_prepare($this->getConnection(), "create_record", "INSERT INTO records (name, amazing_level, country) VALUES ($1, $2, $3);");
       
       //  Execute prepared statement
       $result = pg_execute($this->getConnection(), "create_record", array($name, $amazingLevel, $country));
@@ -174,7 +174,7 @@ class DatabaseConnection {
   //  Updates a row in the records table
   public function update($id, $name, $amazingLevel, $country) {
     try {
-      @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = '$2', amazing_level = '$3', country = '$4' WHERE id = $1;");
+      @pg_prepare($this->getConnection(), "update_record", "UPDATE records SET name = $2, amazing_level = $3, country = $4 WHERE id = $1;");
   
       //  Execute prepared statement
       pg_execute($this->getConnection(), "update_record", array($id, $name, $amazingLevel, $country));
