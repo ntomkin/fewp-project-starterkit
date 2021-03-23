@@ -29,15 +29,13 @@ Starter Kit is written for this path, including scripts used within the Starter 
     * Part A: 
         * Run `composer run setup`, which will automatically:
             * Run `composer install` to install PHP libraries used to read .env files, work with the database
-            * Run `git init` inside of the `app/` folder
             * Run `heroku login`
                 * You will be prompted to login to your Heroku account
                 * Once you are logged in, proceed to Part B below
 
     * Part B: 
-        * Think of a unique name for your app, then `cd app`, and run `heroku apps:create <name-of-my-app>` from the `app/` directory. This will create the app
-        and add a remote to your repository for Heroku. You can also create this app from the Heroku web dashboard, but just remember that you will need
-        to manually add the remote (`heroku git:remote -a <name-of-my-app>`) afterwards.
+        * Think of a unique name for your app, then run `heroku apps:create <name-of-my-app>`. This will create the app and add a remote to your repository for Heroku. You can also create this app from the Heroku web dashboard, but just remember that you will need to manually add the remote 
+        (`heroku git:remote -a <name-of-my-app>`) afterwards.
 
 * Local Development: 
     * Run `composer run dev`, which will automatically:
