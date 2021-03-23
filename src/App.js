@@ -58,6 +58,7 @@ class App extends React.Component {
       .then(function(res) {
         let data = {id: id, name: name, amazing_level: amazingLevel, country: country};
         that.setState({row: data});
+        console.log(that.state.row);
         return data;
       })
       .catch(function(err) {
@@ -124,45 +125,45 @@ class App extends React.Component {
         console.table(err);
       });
 
-    console.log("Test: create a single row");
-    this.create("Sugababes", 9, "England")
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: create a single row");
+    // this.create("Sugababes", 9, "England")
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
   
-    console.log("Test: get all rows");
-    this.all()
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: get all rows");
+    // this.all()
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
-    console.log("Test: delete a single row");
-    this.delete(1)
-      .then(function(res) {
-        console.log(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: delete a single row");
+    // this.delete(1)
+    //   .then(function(res) {
+    //     console.log(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
-    console.log("Test: update a single row");
-    this.update(2, "Vengaboys", 7, "Brazil")
-      .then(function(res) {
-        console.table(res);
-      })
-      .catch(function(err) {
-        console.log("Failed");
-        console.table(err);
-      });
+    // console.log("Test: update a single row");
+    // this.update(2, "Vengaboys", 7, "Brazil")
+    //   .then(function(res) {
+    //     console.table(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log("Failed");
+    //     console.table(err);
+    //   });
 
   }
 
@@ -176,7 +177,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <SingerProfile profile={this.state.data} />
+        <SingerProfile profile={this.state.row} />
       </div>
     );
   }
