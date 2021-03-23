@@ -49,7 +49,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     $name = filter_input(INPUT_POST, 'name', FILTER_DEFAULT);
     $amazingLevel = filter_input(INPUT_POST, 'amazing_level', FILTER_DEFAULT);
     $country = filter_input(INPUT_POST, 'country', FILTER_DEFAULT);
-    var_dump($name);exit;
+    var_dump($_GET, $_REQUEST, $_POST);exit;
 
     //  Use DatabaseConnection to create the row
     $id = $db->create($name, $amazingLevel, $country);
