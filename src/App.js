@@ -114,35 +114,35 @@ class App extends React.Component {
         console.table(err);
       });
 
-    // console.log("Test: get a single row");
-    // this.get(1)
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: get a single row");
+    this.get(1)
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
 
-    // console.log("Test: create a single row");
-    // this.create("Sugababes", 9, "England")
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: create a single row");
+    this.create("Sugababes", 9, "England")
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
   
-    // console.log("Test: get all rows");
-    // this.all()
-    //   .then(function(res) {
-    //     console.table(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log("Failed");
-    //     console.table(err);
-    //   });
+    console.log("Test: get all rows");
+    this.all()
+      .then(function(res) {
+        console.table(res);
+      })
+      .catch(function(err) {
+        console.log("Failed");
+        console.table(err);
+      });
 
     // console.log("Test: delete a single row");
     // this.delete(1)
