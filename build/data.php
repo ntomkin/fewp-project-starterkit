@@ -2,6 +2,7 @@
 require '../vendor/autoload.php';
 
 //  Allows us to communicate with this PHP script from our front-end application
+header('Accept: x-www-form-urlencoded');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -65,7 +66,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
 }
 
 //  Output JSON payout
-header('Accept: x-www-form-urlencoded');
 header('Content-Type: application/json');
 echo HandleRequest::parse($data);
 
