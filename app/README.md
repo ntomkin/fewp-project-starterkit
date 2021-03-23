@@ -53,8 +53,6 @@ to be added by you.
 
 ### The Files (in no particular order)
 
-* README.md: Bra, come on, really?
-
 * app/: A barebones React application created by `create-react-app`. This is where you will spend the majority of your time writing your map-based application.
 Most of the files in this directory are based on the original directory structure. For more information, [check this out](https://github.com/facebook/create-react-app).
 

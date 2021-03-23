@@ -39,6 +39,7 @@ class App extends React.Component {
       .then(function(res) {
         //  We'll set our local state to the row returned from the example
         that.setState({row: res.data.data});
+        console.log(that.state);
         return res.data.data;
       })
       .catch(function(err) {
